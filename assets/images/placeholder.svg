@@ -1,0 +1,32 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F3F4F6"/>
+  
+  <!-- Grid Pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+  </pattern>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  
+  <!-- Image Icon -->
+  <g transform="translate(325, 225)">
+    <!-- Mountain Background -->
+    <path d="M 0 100 L 40 50 L 80 100 Z" fill="#DC2626" opacity="0.3"/>
+    <path d="M 60 100 L 100 40 L 150 100 Z" fill="#DC2626" opacity="0.5"/>
+    
+    <!-- Sun -->
+    <circle cx="120" cy="30" r="15" fill="#FBBF24" opacity="0.6"/>
+    
+    <!-- Frame -->
+    <rect x="0" y="0" width="150" height="100" stroke="#DC2626" stroke-width="3" fill="none" rx="4"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="400" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#6B7280" text-anchor="middle">
+    Image Placeholder
+  </text>
+  
+  <text x="400" y="410" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#9CA3AF" text-anchor="middle">
+    800 × 600
+  </text>
+</svg>

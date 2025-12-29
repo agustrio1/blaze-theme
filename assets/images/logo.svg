@@ -1,0 +1,46 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#DC2626" opacity="0.1"/>
+  
+  <!-- Main Flame Shape -->
+  <path d="M100 30 C100 30 75 60 75 85 C75 95 80 105 90 110 C85 115 82 122 82 130 C82 145 92 160 110 160 C128 160 138 145 138 130 C138 122 135 115 130 110 C140 105 145 95 145 85 C145 60 120 30 100 30Z" 
+        fill="url(#flameGradient)"/>
+  
+  <!-- Inner Flame Highlight -->
+  <path d="M100 45 C100 45 85 65 85 82 C85 88 88 94 95 98 C92 101 90 106 90 112 C90 122 97 132 110 132 C123 132 130 122 130 112 C130 106 128 101 125 98 C132 94 135 88 135 82 C135 65 120 45 100 45Z" 
+        fill="url(#innerFlame)"/>
+  
+  <!-- Flame Spark 1 -->
+  <circle cx="70" cy="70" r="4" fill="#FCD34D" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Flame Spark 2 -->
+  <circle cx="130" cy="75" r="3" fill="#FCD34D" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Flame Spark 3 -->
+  <circle cx="110" cy="50" r="3.5" fill="#FBBF24" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Text: BLAZE -->
+  <text x="100" y="185" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#DC2626" text-anchor="middle">BLAZE</text>
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="flameGradient" x1="100" y1="30" x2="100" y2="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="40%" stop-color="#FBBF24"/>
+      <stop offset="70%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#DC2626"/>
+    </linearGradient>
+    
+    <linearGradient id="innerFlame" x1="100" y1="45" x2="100" y2="132" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="50%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+  </defs>
+</svg>

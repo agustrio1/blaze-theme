@@ -1,0 +1,28 @@
+{
+  "name": "blaze-theme",
+  "version": "1.0.0",
+  "description": "Modern WordPress theme with Svelte and Tailwind css v4 ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "wordpress",
+    "theme",
+    "svelte",
+    "tailwindcss"
+  ],
+  "author": "Trio Agus",
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "@tailwindcss/vite": "^4.1.18",
+    "path": "^0.12.7",
+    "svelte": "^5.46.1",
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.3.0"
+  }
+}

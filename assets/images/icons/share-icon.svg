@@ -1,0 +1,6 @@
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="share-icon">
+                <circle cx="18" cy="5" r="3" stroke="#DC2626" stroke-width="2"/>
+                <circle cx="6" cy="12" r="3" stroke="#DC2626" stroke-width="2"/>
+                <circle cx="18" cy="19" r="3" stroke="#DC2626" stroke-width="2"/>
+                <path d="M8.7 13.7L15.3 17.3M15.3 6.7L8.7 10.3" stroke="#DC2626" stroke-width="2"/>
+            </svg>
