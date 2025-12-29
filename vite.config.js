@@ -17,7 +17,6 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'svelte/main.js'),
         admin: path.resolve(__dirname, 'assets/js/admin.js'),
-        css: path.resolve(__dirname, 'assets/css/main.css'),
       },
       
       output: {
@@ -25,7 +24,8 @@ export default defineConfig({
         chunkFileNames: 'js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.name.endsWith('.css')) {
-            return 'css/main.css';
+            // Biarkan Vite generate nama sendiri
+            return 'css/[name][extname]';
           }
           
           if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name)) {
