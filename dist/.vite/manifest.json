@@ -1,6 +1,6 @@
 {
-  "_props-By7h2erF.js": {
-    "file": "js/chunks/props-By7h2erF.js",
+  "_props-DicW4e3D.js": {
+    "file": "js/chunks/props-DicW4e3D.js",
     "name": "props"
   },
   "assets/js/admin.js": {
@@ -9,7 +9,7 @@
     "src": "assets/js/admin.js",
     "isEntry": true,
     "imports": [
-      "_props-By7h2erF.js"
+      "_props-DicW4e3D.js"
     ],
     "css": [
       "css/admin.css"
@@ -21,7 +21,7 @@
     "src": "assets/js/main.js",
     "isEntry": true,
     "imports": [
-      "_props-By7h2erF.js"
+      "_props-DicW4e3D.js"
     ],
     "css": [
       "css/main.css"

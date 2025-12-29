@@ -24,8 +24,8 @@
     <div id="header-mount" 
          data-site-title="<?php echo esc_attr(get_bloginfo('name')); ?>"
          data-site-url="<?php echo esc_url(home_url('/')); ?>"
-         data-has-logo="<?php echo has_custom_logo() ? 'true' : 'false'; ?>"
-         data-logo-url="<?php echo esc_url(wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full')); ?>"
+         data-has-logo="<?php echo has_custom_logo() ? '1' : '0'; ?>"
+         data-logo-url="<?php echo has_custom_logo() ? esc_url(wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full')) : ''; ?>"
          data-menu-items='<?php
             $menu_items = wp_get_nav_menu_items('primary');
             $menu_data = array();

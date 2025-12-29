@@ -12,6 +12,10 @@ import SearchModal from '../../svelte/components/frontend/SearchModal.svelte';
 import Newsletter from '../../svelte/components/frontend/Newsletter.svelte';
 import PostGrid from '../../svelte/components/blog/PostGrid.svelte';
 
+// Expose to window for inline scripts (optional)
+window.PostGrid = PostGrid;
+window.Newsletter = Newsletter;
+
 /**
  * Initialize application when DOM is ready
  */
@@ -33,10 +37,7 @@ function initializeSvelteComponents() {
   // Header Component
   const headerMount = document.getElementById('header-mount');
   if (headerMount) {
-    console.log('📌 Mounting Header...', {
-      siteTitle: headerMount.dataset.siteTitle,
-      hasLogo: headerMount.dataset.hasLogo
-    });
+    console.log('📌 Mounting Header...', headerMount.dataset);
     
     try {
       new Header({
@@ -44,7 +45,7 @@ function initializeSvelteComponents() {
         props: {
           siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
           siteUrl: headerMount.dataset.siteUrl || '/',
-          hasLogo: headerMount.dataset.hasLogo === 'true',
+          hasLogo: headerMount.dataset.hasLogo === '1',
           logoUrl: headerMount.dataset.logoUrl || '',
           menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
         }
@@ -60,46 +61,65 @@ function initializeSvelteComponents() {
   // Mobile Menu Component
   const mobileMenuMount = document.getElementById('mobile-menu-mount');
   if (mobileMenuMount) {
-    new MobileMenu({
-      target: mobileMenuMount,
-      props: {
-        menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
-      }
-    });
+    try {
+      new MobileMenu({
+        target: mobileMenuMount,
+        props: {
+          menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
+        }
+      });
+      console.log('✅ MobileMenu mounted!');
+    } catch (error) {
+      console.error('❌ MobileMenu error:', error);
+    }
   }
 
   // Search Modal Component
   const searchModalMount = document.getElementById('search-modal-mount');
   if (searchModalMount) {
-    new SearchModal({
-      target: searchModalMount,
-      props: {
-        searchUrl: searchModalMount.dataset.searchUrl || '/search'
-      }
-    });
+    try {
+      new SearchModal({
+        target: searchModalMount,
+        props: {
+          searchUrl: searchModalMount.dataset.searchUrl || '/search'
+        }
+      });
+      console.log('✅ SearchModal mounted!');
+    } catch (error) {
+      console.error('❌ SearchModal error:', error);
+    }
   }
 
   // Newsletter Component
   const newsletterMounts = document.querySelectorAll('.newsletter-mount');
   newsletterMounts.forEach(mount => {
-    new Newsletter({
-      target: mount,
-      props: {
-        apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
-      }
-    });
+    try {
+      new Newsletter({
+        target: mount,
+        props: {
+          apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
+        }
+      });
+    } catch (error) {
+      console.error('❌ Newsletter error:', error);
+    }
   });
 
   // Post Grid Component
   const postGridMount = document.getElementById('post-grid-mount');
   if (postGridMount) {
-    new PostGrid({
-      target: postGridMount,
-      props: {
-        posts: JSON.parse(postGridMount.dataset.posts || '[]'),
-        category: postGridMount.dataset.category || 'all'
-      }
-    });
+    try {
+      new PostGrid({
+        target: postGridMount,
+        props: {
+          posts: JSON.parse(postGridMount.dataset.posts || '[]'),
+          category: postGridMount.dataset.category || 'all'
+        }
+      });
+      console.log('✅ PostGrid mounted!');
+    } catch (error) {
+      console.error('❌ PostGrid error:', error);
+    }
   }
 }
 
