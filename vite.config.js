@@ -8,15 +8,18 @@ export default defineConfig({
     svelte(),
     tailwindcss()
   ],
+  
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'svelte/main.js'),
         admin: path.resolve(__dirname, 'assets/js/admin.js'),
-        // customizerPreview: path.resolve(__dirname, 'svelte/customizer-preview.js')
+        css: path.resolve(__dirname, 'assets/css/main.css'),
       },
+      
       output: {
         entryFileNames: 'js/[name].js',
         chunkFileNames: 'js/[name]-[hash].js',
@@ -24,16 +27,37 @@ export default defineConfig({
           if (assetInfo.name.endsWith('.css')) {
             return 'css/[name][extname]';
           }
+          
+          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name)) {
+            return 'images/[name]-[hash][extname]';
+          }
+          
+          if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name)) {
+            return 'fonts/[name]-[hash][extname]';
+          }
+          
           return 'assets/[name]-[hash][extname]';
-        }
-      }
+        },
+      },
     },
+    
     minify: 'esbuild',
-    sourcemap: false
+    sourcemap: false,
   },
+  
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'svelte')
-    }
-  }
+      '@': path.resolve(__dirname, 'svelte'),
+      '@components': path.resolve(__dirname, 'svelte/components'),
+      '@stores': path.resolve(__dirname, 'svelte/stores'),
+      '@assets': path.resolve(__dirname, 'assets'),
+    },
+  },
+  
+  server: {
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
+    open: false,
+  },
 });
