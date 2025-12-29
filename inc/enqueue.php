@@ -15,19 +15,11 @@ if (!defined('ABSPATH')) {
  */
 function blaze_enqueue_scripts() {
     
-    // Load main.css (Tailwind CSS compiled)
+    // Load main.css (Tailwind CSS compiled dari Vite)
     wp_enqueue_style(
-        'blaze-style-tailwind',
+        'blaze-style-main',
         get_template_directory_uri() . '/dist/css/main.css',
         array(),
-        BLAZE_VERSION
-    );
-    
-    // Load admin.css (Additional styles)
-    wp_enqueue_style(
-        'blaze-style-admin',
-        get_template_directory_uri() . '/dist/css/admin.css',
-        array('blaze-style-tailwind'),
         BLAZE_VERSION
     );
     
@@ -35,7 +27,7 @@ function blaze_enqueue_scripts() {
     wp_enqueue_style(
         'blaze-theme-style',
         get_stylesheet_uri(),
-        array('blaze-style-main'),
+        array('blaze-style-main'), // FIXED: Dependency ke main.css yang ada
         BLAZE_VERSION
     );
     
@@ -54,7 +46,6 @@ function blaze_enqueue_scripts() {
     }
     
     // Main JavaScript bundle (Vite compiled with Svelte)
-    // FIXED: Handle duplikat dan salah load admin.js
     wp_enqueue_script(
         'blaze-main',
         get_template_directory_uri() . '/dist/js/main.js',
@@ -169,7 +160,7 @@ function blaze_inline_styles() {
         }
     ";
     
-    wp_add_inline_style('blaze-style-tailwind', $custom_css);
+    wp_add_inline_style('blaze-style-main', $custom_css);
 }
 add_action('wp_enqueue_scripts', 'blaze_inline_styles');
 
@@ -187,16 +178,9 @@ function blaze_admin_scripts($hook) {
     
     // Admin styles
     wp_enqueue_style(
-        'blaze-admin-tailwind',
-        get_template_directory_uri() . '/dist/css/main2.css',
-        array(),
-        BLAZE_VERSION
-    );
-    
-    wp_enqueue_style(
         'blaze-admin-main',
         get_template_directory_uri() . '/dist/css/main.css',
-        array('blaze-admin-tailwind'),
+        array(),
         BLAZE_VERSION
     );
     
@@ -218,16 +202,9 @@ function blaze_editor_styles() {
     
     // Editor styles
     wp_enqueue_style(
-        'blaze-editor-tailwind',
-        get_template_directory_uri() . '/dist/css/main2.css',
-        array(),
-        BLAZE_VERSION
-    );
-    
-    wp_enqueue_style(
         'blaze-editor-main',
         get_template_directory_uri() . '/dist/css/main.css',
-        array('blaze-editor-tailwind'),
+        array(),
         BLAZE_VERSION
     );
     
@@ -253,7 +230,6 @@ add_action('enqueue_block_editor_assets', 'blaze_editor_styles');
 function blaze_preload_assets() {
     ?>
     <!-- Preload critical CSS -->
-    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main2.css" as="style">
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main.css" as="style">
     
     <!-- Preload critical JS -->
@@ -268,13 +244,11 @@ add_action('wp_head', 'blaze_preload_assets', 1);
 
 /**
  * Add type="module" and defer attributes to scripts
- * FIXED: Gabungkan kedua filter jadi satu
  */
 function blaze_script_attributes($tag, $handle, $src) {
     
     // Add type="module" for Vite bundles
     if ('blaze-main' === $handle) {
-        // Tambah type="module" dan defer sekaligus
         $tag = str_replace(' src', ' type="module" defer src', $tag);
     }
     
