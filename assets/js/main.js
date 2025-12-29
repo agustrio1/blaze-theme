@@ -16,6 +16,8 @@ import PostGrid from '../../svelte/components/blog/PostGrid.svelte';
  * Initialize application when DOM is ready
  */
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('🔥 Blaze Theme: Initializing...');
+  
   initializeSvelteComponents();
   initializeSmoothScroll();
   initializeLazyLoading();
@@ -31,16 +33,28 @@ function initializeSvelteComponents() {
   // Header Component
   const headerMount = document.getElementById('header-mount');
   if (headerMount) {
-    new Header({
-      target: headerMount,
-      props: {
-        siteTitle: headerMount.dataset.siteName || 'Blaze Theme',
-        siteUrl: headerMount.dataset.siteUrl || '/',
-        hasLogo: headerMount.dataset.hasLogo === 'true',
-        logoUrl: headerMount.dataset.logoUrl || '',
-        menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
-      }
+    console.log('📌 Mounting Header...', {
+      siteTitle: headerMount.dataset.siteTitle,
+      hasLogo: headerMount.dataset.hasLogo
     });
+    
+    try {
+      new Header({
+        target: headerMount,
+        props: {
+          siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
+          siteUrl: headerMount.dataset.siteUrl || '/',
+          hasLogo: headerMount.dataset.hasLogo === 'true',
+          logoUrl: headerMount.dataset.logoUrl || '',
+          menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
+        }
+      });
+      console.log('✅ Header mounted!');
+    } catch (error) {
+      console.error('❌ Header error:', error);
+    }
+  } else {
+    console.warn('⚠️ #header-mount not found!');
   }
 
   // Mobile Menu Component
@@ -97,7 +111,6 @@ function initializeSmoothScroll() {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       
-      // Skip if href is just "#"
       if (href === '#' || href === '#!') {
         e.preventDefault();
         return;
@@ -113,7 +126,6 @@ function initializeSmoothScroll() {
           behavior: 'smooth'
         });
 
-        // Update URL without jumping
         history.pushState(null, null, href);
       }
     });
@@ -159,7 +171,6 @@ function initializeBackToTop() {
   backToTop.setAttribute('aria-label', 'Back to top');
   document.body.appendChild(backToTop);
 
-  // Show/hide on scroll
   window.addEventListener('scroll', () => {
     if (window.pageYOffset > 300) {
       backToTop.classList.remove('opacity-0', 'pointer-events-none');
@@ -168,7 +179,6 @@ function initializeBackToTop() {
     }
   });
 
-  // Scroll to top on click
   backToTop.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
@@ -184,7 +194,6 @@ function initializeCommentForm() {
   const commentForm = document.getElementById('commentform');
   if (!commentForm) return;
 
-  // Add loading state
   commentForm.addEventListener('submit', function() {
     const submitBtn = this.querySelector('input[type="submit"]');
     if (submitBtn) {
@@ -193,7 +202,6 @@ function initializeCommentForm() {
     }
   });
 
-  // Character counter for comment textarea
   const commentTextarea = commentForm.querySelector('#comment');
   if (commentTextarea) {
     const maxLength = 1000;
@@ -231,7 +239,6 @@ function initializeExternalLinks() {
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener noreferrer');
       
-      // Add external link icon
       if (!link.querySelector('.external-icon')) {
         const icon = document.createElement('span');
         icon.className = 'external-icon inline-block ml-1';
@@ -257,7 +264,7 @@ window.addEventListener('scroll', () => {
 });
 
 /**
- * Mobile menu toggle (fallback if Svelte not loaded)
+ * Mobile menu toggle (fallback)
  */
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
@@ -268,7 +275,6 @@ if (mobileMenuToggle && mobileMenu) {
     document.body.classList.toggle('menu-open');
   });
 
-  // Close on overlay click
   const overlay = mobileMenu.querySelector('.overlay');
   if (overlay) {
     overlay.addEventListener('click', () => {
@@ -357,4 +363,4 @@ if (tocContainer && article) {
   }
 }
 
-// console.log('🔥 Blaze Theme loaded successfully!');
+console.log('🔥 Blaze main.js loaded!');

@@ -15,18 +15,18 @@ if (!defined('ABSPATH')) {
  */
 function blaze_enqueue_scripts() {
     
-    // Load main2.css (Tailwind CSS compiled)
+    // Load main.css (Tailwind CSS compiled)
     wp_enqueue_style(
         'blaze-style-tailwind',
-        get_template_directory_uri() . '/dist/css/main2.css',
+        get_template_directory_uri() . '/dist/css/main.css',
         array(),
         BLAZE_VERSION
     );
     
-    // Load main.css (Additional styles)
+    // Load admin.css (Additional styles)
     wp_enqueue_style(
-        'blaze-style-main',
-        get_template_directory_uri() . '/dist/css/main.css',
+        'blaze-style-admin',
+        get_template_directory_uri() . '/dist/css/admin.css',
         array('blaze-style-tailwind'),
         BLAZE_VERSION
     );

@@ -1,16 +1,7 @@
 {
   "_props-By7h2erF.js": {
-    "file": "js/props-By7h2erF.js",
+    "file": "js/chunks/props-By7h2erF.js",
     "name": "props"
-  },
-  "assets/css/main.css": {
-    "file": "css/main2.css",
-    "src": "assets/css/main.css",
-    "isEntry": true,
-    "name": "maincss",
-    "names": [
-      "maincss.css"
-    ]
   },
   "assets/js/admin.js": {
     "file": "js/admin.js",
@@ -21,7 +12,7 @@
       "_props-By7h2erF.js"
     ],
     "css": [
-      "css/main.css"
+      "css/admin.css"
     ]
   },
   "assets/js/main.js": {
@@ -33,7 +24,7 @@
       "_props-By7h2erF.js"
     ],
     "css": [
-      "css/main2.css"
+      "css/main.css"
     ]
   }
 }

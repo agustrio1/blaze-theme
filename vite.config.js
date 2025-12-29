@@ -16,18 +16,20 @@ export default defineConfig({
     
     rollupOptions: {
       input: {
-        // PERBAIKI: main = svelte components, admin = admin scripts
-        main: path.resolve(__dirname, 'assets/js/main.js'),  // Theme JS dengan Svelte
-        admin: path.resolve(__dirname, 'assets/js/admin.js'), // Admin JS
-        maincss: path.resolve(__dirname, 'assets/css/main.css'),
+        main: path.resolve(__dirname, 'assets/js/main.js'),
+        admin: path.resolve(__dirname, 'assets/js/admin.js'),
       },
       
       output: {
-        entryFileNames: 'js/[name].js',
-        chunkFileNames: 'js/[name]-[hash].js',
+        entryFileNames: (chunkInfo) => {
+          // Debug log
+          console.log('📦 Building entry:', chunkInfo.name, 'from', chunkInfo.facadeModuleId);
+          return `js/${chunkInfo.name}.js`;
+        },
+        chunkFileNames: 'js/chunks/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.name.endsWith('.css')) {
-            return 'css/main.css';
+            return 'css/[name][extname]';
           }
           
           if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name)) {
@@ -40,7 +42,15 @@ export default defineConfig({
           
           return 'assets/[name]-[hash][extname]';
         },
+        
+        // Preserve entry signatures
+        preserveEntrySignatures: 'strict',
       },
+      
+      // Tree shaking options
+      treeshake: {
+        moduleSideEffects: true
+      }
     },
     
     minify: 'esbuild',
