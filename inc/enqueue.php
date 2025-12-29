@@ -15,10 +15,10 @@ if (!defined('ABSPATH')) {
  */
 function blaze_enqueue_scripts() {
     
-    // Load main2.css (Tailwind CSS compiled)
+    // Load maincss.css (Tailwind CSS compiled)
     wp_enqueue_style(
         'blaze-style-tailwind',
-        get_template_directory_uri() . '/dist/css/main2.css',
+        get_template_directory_uri() . '/dist/css/maincss.css',
         array(),
         BLAZE_VERSION
     );
@@ -54,14 +54,7 @@ function blaze_enqueue_scripts() {
     }
     
     // Main JavaScript bundle (Vite compiled with Svelte)
-    wp_enqueue_script(
-        'blaze-main',
-        get_template_directory_uri() . '/dist/js/admin.js',
-        array(),
-        BLAZE_VERSION,
-        true
-    );
-    
+    // FIXED: Handle duplikat dan salah load admin.js
     wp_enqueue_script(
         'blaze-main',
         get_template_directory_uri() . '/dist/js/main.js',
@@ -274,22 +267,20 @@ function blaze_preload_assets() {
 add_action('wp_head', 'blaze_preload_assets', 1);
 
 /**
- * Add defer/async to scripts
+ * Add type="module" and defer attributes to scripts
+ * FIXED: Gabungkan kedua filter jadi satu
  */
-function blaze_script_loader_tag($tag, $handle, $src) {
+function blaze_script_attributes($tag, $handle, $src) {
     
-    // Scripts to defer
-    $defer_scripts = array(
-        'blaze-main',
-    );
-    
-    if (in_array($handle, $defer_scripts)) {
-        return str_replace(' src', ' defer src', $tag);
+    // Add type="module" for Vite bundles
+    if ('blaze-main' === $handle) {
+        // Tambah type="module" dan defer sekaligus
+        $tag = str_replace(' src', ' type="module" defer src', $tag);
     }
     
     return $tag;
 }
-add_filter('script_loader_tag', 'blaze_script_loader_tag', 10, 3);
+add_filter('script_loader_tag', 'blaze_script_attributes', 10, 3);
 
 /**
  * Remove jQuery migrate
@@ -304,17 +295,3 @@ function blaze_remove_jquery_migrate($scripts) {
     }
 }
 add_action('wp_default_scripts', 'blaze_remove_jquery_migrate');
-
-/**
- * Add module type to script
- */
-function blaze_add_type_attribute($tag, $handle, $src) {
-    
-    // Add type="module" for Vite bundles
-    if ('blaze-main' === $handle) {
-        $tag = str_replace(' src', ' type="module" src', $tag);
-    }
-    
-    return $tag;
-}
-add_filter('script_loader_tag', 'blaze_add_type_attribute', 10, 3);

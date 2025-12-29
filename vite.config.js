@@ -12,11 +12,13 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    manifest: true,
     
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'svelte/main.js'),
-        admin: path.resolve(__dirname, 'assets/js/admin.js'),
+        // PERBAIKI: main = svelte components, admin = admin scripts
+        main: path.resolve(__dirname, 'assets/js/main.js'),  // Theme JS dengan Svelte
+        admin: path.resolve(__dirname, 'assets/js/admin.js'), // Admin JS
         maincss: path.resolve(__dirname, 'assets/css/main.css'),
       },
       
@@ -25,7 +27,6 @@ export default defineConfig({
         chunkFileNames: 'js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.name.endsWith('.css')) {
-            // Paksa nama file CSS jadi main.css
             return 'css/main.css';
           }
           
