@@ -15,11 +15,19 @@ if (!defined('ABSPATH')) {
  */
 function blaze_enqueue_scripts() {
     
-    // Main stylesheet (Tailwind CSS compiled)
+    // Load main2.css (Tailwind CSS compiled)
     wp_enqueue_style(
-        'blaze-style',
-        get_template_directory_uri() . '/dist/css/css.css',
+        'blaze-style-tailwind',
+        get_template_directory_uri() . '/dist/css/main2.css',
         array(),
+        BLAZE_VERSION
+    );
+    
+    // Load main.css (Additional styles)
+    wp_enqueue_style(
+        'blaze-style-main',
+        get_template_directory_uri() . '/dist/css/main.css',
+        array('blaze-style-tailwind'),
         BLAZE_VERSION
     );
     
@@ -27,7 +35,7 @@ function blaze_enqueue_scripts() {
     wp_enqueue_style(
         'blaze-theme-style',
         get_stylesheet_uri(),
-        array('blaze-style'),
+        array('blaze-style-main'),
         BLAZE_VERSION
     );
     
@@ -160,8 +168,7 @@ function blaze_inline_styles() {
         }
     ";
     
-    // Add to first CSS file
-    wp_add_inline_style('blaze-style-main', $custom_css);
+    wp_add_inline_style('blaze-style-tailwind', $custom_css);
 }
 add_action('wp_enqueue_scripts', 'blaze_inline_styles');
 
@@ -179,9 +186,16 @@ function blaze_admin_scripts($hook) {
     
     // Admin styles
     wp_enqueue_style(
-        'blaze-admin',
-        get_template_directory_uri() . '/dist/css/css.css',
+        'blaze-admin-tailwind',
+        get_template_directory_uri() . '/dist/css/main2.css',
         array(),
+        BLAZE_VERSION
+    );
+    
+    wp_enqueue_style(
+        'blaze-admin-main',
+        get_template_directory_uri() . '/dist/css/main.css',
+        array('blaze-admin-tailwind'),
         BLAZE_VERSION
     );
     
@@ -203,9 +217,16 @@ function blaze_editor_styles() {
     
     // Editor styles
     wp_enqueue_style(
-        'blaze-editor-styles',
-        get_template_directory_uri() . '/dist/css/css.css',
+        'blaze-editor-tailwind',
+        get_template_directory_uri() . '/dist/css/main2.css',
         array(),
+        BLAZE_VERSION
+    );
+    
+    wp_enqueue_style(
+        'blaze-editor-main',
+        get_template_directory_uri() . '/dist/css/main.css',
+        array('blaze-editor-tailwind'),
         BLAZE_VERSION
     );
     
@@ -231,8 +252,8 @@ add_action('enqueue_block_editor_assets', 'blaze_editor_styles');
 function blaze_preload_assets() {
     ?>
     <!-- Preload critical CSS -->
-    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main.css" as="style">
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main2.css" as="style">
+    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main.css" as="style">
     
     <!-- Preload critical JS -->
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/js/main.js" as="script">
