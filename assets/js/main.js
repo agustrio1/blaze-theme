@@ -6,11 +6,11 @@
 import '../css/main.css';
 
 // Import Svelte Components
-import Header from '../svelte/components/frontend/Header.svelte';
-import MobileMenu from '../svelte/components/frontend/MobileMenu.svelte';
-import SearchModal from '../svelte/components/frontend/SearchModal.svelte';
-import Newsletter from '../svelte/components/frontend/Newsletter.svelte';
-import PostGrid from '../svelte/components/blog/PostGrid.svelte';
+import Header from '../../svelte/components/frontend/Header.svelte';
+import MobileMenu from '../../svelte/components/frontend/MobileMenu.svelte';
+import SearchModal from '../../svelte/components/frontend/SearchModal.svelte';
+import Newsletter from '../../svelte/components/frontend/Newsletter.svelte';
+import PostGrid from '../../svelte/components/blog/PostGrid.svelte';
 
 /**
  * Initialize application when DOM is ready
@@ -34,8 +34,11 @@ function initializeSvelteComponents() {
     new Header({
       target: headerMount,
       props: {
-        siteName: headerMount.dataset.siteName || 'Blaze Theme',
-        siteTagline: headerMount.dataset.siteTagline || ''
+        siteTitle: headerMount.dataset.siteName || 'Blaze Theme',
+        siteUrl: headerMount.dataset.siteUrl || '/',
+        hasLogo: headerMount.dataset.hasLogo === 'true',
+        logoUrl: headerMount.dataset.logoUrl || '',
+        menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
       }
     });
   }
@@ -152,7 +155,7 @@ function initializeLazyLoading() {
 function initializeBackToTop() {
   const backToTop = document.createElement('button');
   backToTop.innerHTML = '↑';
-  backToTop.className = 'back-to-top fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-primary-dark z-50';
+  backToTop.className = 'back-to-top fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-primary-dark z-50 flex items-center justify-center text-xl font-bold';
   backToTop.setAttribute('aria-label', 'Back to top');
   document.body.appendChild(backToTop);
 
@@ -354,4 +357,4 @@ if (tocContainer && article) {
   }
 }
 
-console.log('🔥 Blaze Theme loaded successfully!');
+// console.log('🔥 Blaze Theme loaded successfully!');

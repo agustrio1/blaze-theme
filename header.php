@@ -15,76 +15,47 @@
         <?php esc_html_e('Skip to content', 'blaze'); ?>
     </a>
 
-    <header id="masthead" class="site-header sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md transition-all">
-        <div id="header-component"></div>
-    </header>
+    <!-- Header Mount Point -->
+    <div id="header-mount" 
+         data-site-name="<?php echo esc_attr(get_bloginfo('name')); ?>"
+         data-site-url="<?php echo esc_url(home_url('/')); ?>"
+         data-has-logo="<?php echo has_custom_logo() ? 'true' : 'false'; ?>"
+         data-logo-url="<?php echo esc_url(wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full')); ?>"
+         data-menu-items='<?php
+            $menu_items = wp_get_nav_menu_items('primary');
+            $menu_data = array();
+            if ($menu_items) {
+                foreach ($menu_items as $item) {
+                    $menu_data[] = array(
+                        'id' => $item->ID,
+                        'title' => $item->title,
+                        'url' => $item->url,
+                        'target' => $item->target ?: '_self',
+                    );
+                }
+            }
+            echo esc_attr(json_encode($menu_data));
+         ?>'></div>
 
-    <div id="mobile-menu-component"></div>
-    <div id="search-modal-component"></div>
+    <!-- Mobile Menu Mount Point -->
+    <div id="mobile-menu-mount"
+         data-menu-items='<?php
+            $menu_items = wp_get_nav_menu_items('primary');
+            $menu_data = array();
+            if ($menu_items) {
+                foreach ($menu_items as $item) {
+                    $menu_data[] = array(
+                        'id' => $item->ID,
+                        'title' => $item->title,
+                        'url' => $item->url,
+                    );
+                }
+            }
+            echo esc_attr(json_encode($menu_data));
+         ?>'></div>
+
+    <!-- Search Modal Mount Point -->
+    <div id="search-modal-mount"
+         data-search-url="<?php echo esc_url(home_url('/?s=')); ?>"></div>
 
     <div id="content" class="site-content">
-
-<script>
-// Mount Svelte Header Component
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('header-component')) {
-        new Header({
-            target: document.getElementById('header-component'),
-            props: {
-                siteTitle: '<?php echo esc_js(get_bloginfo('name')); ?>',
-                siteUrl: '<?php echo esc_url(home_url('/')); ?>',
-                hasLogo: <?php echo has_custom_logo() ? 'true' : 'false'; ?>,
-                logoUrl: '<?php echo esc_url(wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full')); ?>',
-                menuItems: <?php
-                    $menu_items = wp_get_nav_menu_items('primary');
-                    $menu_data = array();
-                    if ($menu_items) {
-                        foreach ($menu_items as $item) {
-                            $menu_data[] = array(
-                                'id' => $item->ID,
-                                'title' => $item->title,
-                                'url' => $item->url,
-                                'target' => $item->target,
-                            );
-                        }
-                    }
-                    echo json_encode($menu_data);
-                ?>
-            }
-        });
-    }
-
-    // Mount Mobile Menu
-    if (document.getElementById('mobile-menu-component')) {
-        new MobileMenu({
-            target: document.getElementById('mobile-menu-component'),
-            props: {
-                menuItems: <?php
-                    $menu_items = wp_get_nav_menu_items('primary');
-                    $menu_data = array();
-                    if ($menu_items) {
-                        foreach ($menu_items as $item) {
-                            $menu_data[] = array(
-                                'id' => $item->ID,
-                                'title' => $item->title,
-                                'url' => $item->url,
-                            );
-                        }
-                    }
-                    echo json_encode($menu_data);
-                ?>
-            }
-        });
-    }
-
-    // Mount Search Modal
-    if (document.getElementById('search-modal-component')) {
-        new SearchModal({
-            target: document.getElementById('search-modal-component'),
-            props: {
-                searchUrl: '<?php echo esc_url(home_url('/')); ?>'
-            }
-        });
-    }
-});
-</script>
