@@ -1,7 +1,7 @@
 <script>
   let { 
-    siteTitle, 
-    siteUrl, 
+    siteTitle = 'Blaze Theme', 
+    siteUrl = '/', 
     hasLogo = false, 
     logoUrl = '', 
     menuItems = [] 

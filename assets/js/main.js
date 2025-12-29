@@ -40,15 +40,14 @@ function initializeSvelteComponents() {
     console.log('📌 Mounting Header...', headerMount.dataset);
     
     try {
+      // Svelte 5 runes mode - props harus flat, gak pake nested 'props' key
       new Header({
         target: headerMount,
-        props: {
-          siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
-          siteUrl: headerMount.dataset.siteUrl || '/',
-          hasLogo: headerMount.dataset.hasLogo === '1',
-          logoUrl: headerMount.dataset.logoUrl || '',
-          menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
-        }
+        siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
+        siteUrl: headerMount.dataset.siteUrl || '/',
+        hasLogo: headerMount.dataset.hasLogo === '1',
+        logoUrl: headerMount.dataset.logoUrl || '',
+        menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
       });
       console.log('✅ Header mounted!');
     } catch (error) {
@@ -64,9 +63,7 @@ function initializeSvelteComponents() {
     try {
       new MobileMenu({
         target: mobileMenuMount,
-        props: {
-          menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
-        }
+        menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
       });
       console.log('✅ MobileMenu mounted!');
     } catch (error) {
@@ -80,9 +77,7 @@ function initializeSvelteComponents() {
     try {
       new SearchModal({
         target: searchModalMount,
-        props: {
-          searchUrl: searchModalMount.dataset.searchUrl || '/search'
-        }
+        searchUrl: searchModalMount.dataset.searchUrl || '/search'
       });
       console.log('✅ SearchModal mounted!');
     } catch (error) {
@@ -96,9 +91,7 @@ function initializeSvelteComponents() {
     try {
       new Newsletter({
         target: mount,
-        props: {
-          apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
-        }
+        apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
       });
     } catch (error) {
       console.error('❌ Newsletter error:', error);
@@ -111,10 +104,8 @@ function initializeSvelteComponents() {
     try {
       new PostGrid({
         target: postGridMount,
-        props: {
-          posts: JSON.parse(postGridMount.dataset.posts || '[]'),
-          category: postGridMount.dataset.category || 'all'
-        }
+        posts: JSON.parse(postGridMount.dataset.posts || '[]'),
+        category: postGridMount.dataset.category || 'all'
       });
       console.log('✅ PostGrid mounted!');
     } catch (error) {
