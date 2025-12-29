@@ -18,7 +18,7 @@ function blaze_enqueue_scripts() {
     // Main stylesheet (Tailwind CSS compiled)
     wp_enqueue_style(
         'blaze-style',
-        get_template_directory_uri() . '/dist/css/main.css',
+        get_template_directory_uri() . '/dist/css/css.css',
         array(),
         BLAZE_VERSION
     );
@@ -48,7 +48,7 @@ function blaze_enqueue_scripts() {
     // Main JavaScript bundle (Vite compiled with Svelte)
     wp_enqueue_script(
         'blaze-main',
-        get_template_directory_uri() . '/dist/js/bundle.js',
+        get_template_directory_uri() . '/dist/js/main.js',
         array(),
         BLAZE_VERSION,
         true
@@ -160,7 +160,8 @@ function blaze_inline_styles() {
         }
     ";
     
-    wp_add_inline_style('blaze-style', $custom_css);
+    // Add to first CSS file
+    wp_add_inline_style('blaze-style-main', $custom_css);
 }
 add_action('wp_enqueue_scripts', 'blaze_inline_styles');
 
@@ -179,7 +180,7 @@ function blaze_admin_scripts($hook) {
     // Admin styles
     wp_enqueue_style(
         'blaze-admin',
-        get_template_directory_uri() . '/dist/css/main.css',
+        get_template_directory_uri() . '/dist/css/css.css',
         array(),
         BLAZE_VERSION
     );
@@ -203,7 +204,7 @@ function blaze_editor_styles() {
     // Editor styles
     wp_enqueue_style(
         'blaze-editor-styles',
-        get_template_directory_uri() . '/dist/css/main.css',
+        get_template_directory_uri() . '/dist/css/css.css',
         array(),
         BLAZE_VERSION
     );
@@ -231,9 +232,10 @@ function blaze_preload_assets() {
     ?>
     <!-- Preload critical CSS -->
     <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main.css" as="style">
+    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/css/main2.css" as="style">
     
     <!-- Preload critical JS -->
-    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/js/bundle.js" as="script">
+    <link rel="preload" href="<?php echo get_template_directory_uri(); ?>/dist/js/main.js" as="script">
     
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
