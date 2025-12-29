@@ -56,6 +56,14 @@ function blaze_enqueue_scripts() {
     // Main JavaScript bundle (Vite compiled with Svelte)
     wp_enqueue_script(
         'blaze-main',
+        get_template_directory_uri() . '/dist/js/admin.js',
+        array(),
+        BLAZE_VERSION,
+        true
+    );
+    
+    wp_enqueue_script(
+        'blaze-main',
         get_template_directory_uri() . '/dist/js/main.js',
         array(),
         BLAZE_VERSION,
