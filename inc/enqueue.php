@@ -15,10 +15,10 @@ if (!defined('ABSPATH')) {
  */
 function blaze_enqueue_scripts() {
     
-    // Load maincss.css (Tailwind CSS compiled)
+    // Load main2.css (Tailwind CSS compiled)
     wp_enqueue_style(
         'blaze-style-tailwind',
-        get_template_directory_uri() . '/dist/css/maincss.css',
+        get_template_directory_uri() . '/dist/css/main2.css',
         array(),
         BLAZE_VERSION
     );
