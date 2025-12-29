@@ -40,16 +40,17 @@ function initializeSvelteComponents() {
     console.log('📌 Mounting Header...', headerMount.dataset);
     
     try {
-      // Svelte 5 runes mode - props harus flat, gak pake nested 'props' key
-      new Header({
+      const header = new Header({
         target: headerMount,
-        siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
-        siteUrl: headerMount.dataset.siteUrl || '/',
-        hasLogo: headerMount.dataset.hasLogo === '1',
-        logoUrl: headerMount.dataset.logoUrl || '',
-        menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
+        props: {
+          siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
+          siteUrl: headerMount.dataset.siteUrl || '/',
+          hasLogo: headerMount.dataset.hasLogo === '1',
+          logoUrl: headerMount.dataset.logoUrl || '',
+          menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
+        }
       });
-      console.log('✅ Header mounted!');
+      console.log('✅ Header mounted!', header);
     } catch (error) {
       console.error('❌ Header error:', error);
     }
@@ -63,7 +64,9 @@ function initializeSvelteComponents() {
     try {
       new MobileMenu({
         target: mobileMenuMount,
-        menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
+        props: {
+          menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
+        }
       });
       console.log('✅ MobileMenu mounted!');
     } catch (error) {
@@ -77,7 +80,9 @@ function initializeSvelteComponents() {
     try {
       new SearchModal({
         target: searchModalMount,
-        searchUrl: searchModalMount.dataset.searchUrl || '/search'
+        props: {
+          searchUrl: searchModalMount.dataset.searchUrl || '/search'
+        }
       });
       console.log('✅ SearchModal mounted!');
     } catch (error) {
@@ -91,7 +96,9 @@ function initializeSvelteComponents() {
     try {
       new Newsletter({
         target: mount,
-        apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
+        props: {
+          apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
+        }
       });
     } catch (error) {
       console.error('❌ Newsletter error:', error);
@@ -104,8 +111,10 @@ function initializeSvelteComponents() {
     try {
       new PostGrid({
         target: postGridMount,
-        posts: JSON.parse(postGridMount.dataset.posts || '[]'),
-        category: postGridMount.dataset.category || 'all'
+        props: {
+          posts: JSON.parse(postGridMount.dataset.posts || '[]'),
+          category: postGridMount.dataset.category || 'all'
+        }
       });
       console.log('✅ PostGrid mounted!');
     } catch (error) {
