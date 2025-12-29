@@ -31,6 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
+ * Helper: Mount Svelte 5 component dengan proper props binding
+ */
+function mountSvelteComponent(Component, target, propsData) {
+  // Create a wrapper div
+  const wrapper = document.createElement('div');
+  target.appendChild(wrapper);
+  
+  // Mount component with proper context
+  return new Component({
+    target: wrapper,
+    props: propsData
+  });
+}
+
+/**
  * Initialize all Svelte components
  */
 function initializeSvelteComponents() {
@@ -40,19 +55,21 @@ function initializeSvelteComponents() {
     console.log('📌 Mounting Header...', headerMount.dataset);
     
     try {
-      const header = new Header({
-        target: headerMount,
-        props: {
-          siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
-          siteUrl: headerMount.dataset.siteUrl || '/',
-          hasLogo: headerMount.dataset.hasLogo === '1',
-          logoUrl: headerMount.dataset.logoUrl || '',
-          menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
-        }
-      });
-      console.log('✅ Header mounted!', header);
+      const headerProps = {
+        siteTitle: headerMount.dataset.siteTitle || 'Blaze Theme',
+        siteUrl: headerMount.dataset.siteUrl || '/',
+        hasLogo: headerMount.dataset.hasLogo === '1',
+        logoUrl: headerMount.dataset.logoUrl || '',
+        menuItems: JSON.parse(headerMount.dataset.menuItems || '[]')
+      };
+      
+      console.log('Props:', headerProps);
+      
+      mountSvelteComponent(Header, headerMount, headerProps);
+      console.log('✅ Header mounted!');
     } catch (error) {
       console.error('❌ Header error:', error);
+      console.error('Stack:', error.stack);
     }
   } else {
     console.warn('⚠️ #header-mount not found!');
@@ -62,11 +79,8 @@ function initializeSvelteComponents() {
   const mobileMenuMount = document.getElementById('mobile-menu-mount');
   if (mobileMenuMount) {
     try {
-      new MobileMenu({
-        target: mobileMenuMount,
-        props: {
-          menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
-        }
+      mountSvelteComponent(MobileMenu, mobileMenuMount, {
+        menuItems: JSON.parse(mobileMenuMount.dataset.menuItems || '[]')
       });
       console.log('✅ MobileMenu mounted!');
     } catch (error) {
@@ -78,11 +92,8 @@ function initializeSvelteComponents() {
   const searchModalMount = document.getElementById('search-modal-mount');
   if (searchModalMount) {
     try {
-      new SearchModal({
-        target: searchModalMount,
-        props: {
-          searchUrl: searchModalMount.dataset.searchUrl || '/search'
-        }
+      mountSvelteComponent(SearchModal, searchModalMount, {
+        searchUrl: searchModalMount.dataset.searchUrl || '/search'
       });
       console.log('✅ SearchModal mounted!');
     } catch (error) {
@@ -94,11 +105,8 @@ function initializeSvelteComponents() {
   const newsletterMounts = document.querySelectorAll('.newsletter-mount');
   newsletterMounts.forEach(mount => {
     try {
-      new Newsletter({
-        target: mount,
-        props: {
-          apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
-        }
+      mountSvelteComponent(Newsletter, mount, {
+        apiUrl: mount.dataset.apiUrl || '/wp-json/blaze/v1/newsletter'
       });
     } catch (error) {
       console.error('❌ Newsletter error:', error);
@@ -109,12 +117,9 @@ function initializeSvelteComponents() {
   const postGridMount = document.getElementById('post-grid-mount');
   if (postGridMount) {
     try {
-      new PostGrid({
-        target: postGridMount,
-        props: {
-          posts: JSON.parse(postGridMount.dataset.posts || '[]'),
-          category: postGridMount.dataset.category || 'all'
-        }
+      mountSvelteComponent(PostGrid, postGridMount, {
+        posts: JSON.parse(postGridMount.dataset.posts || '[]'),
+        category: postGridMount.dataset.category || 'all'
       });
       console.log('✅ PostGrid mounted!');
     } catch (error) {
